@@ -4,128 +4,144 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Http;
 
-use Tavaan\Core\Contracts\Config\RepositoryInterface as Config;
-
 /**
- * Response — پیاده‌سازی اصلی موتور.
+ * Response — پاسخ HTTP immutable.
  *
- * @see \Tavaan\Engine\Http\Contracts\ResponseInterface
+ * @see docs/03-engines/http.md (DOC-039)
  */
-final class Response implements Contracts\ResponseInterface
+final class Response
 {
-    /**
-     * @param Config $config پیکربندی موتور
-     */
+    public HeaderBag $headers;
+    public ?string $content;
+
     public function __construct(
-        private readonly Config $config,
+        public int $status = 200,
+        string $content = '',
+        array $headers = [],
     ) {
+        $this->headers = new HeaderBag($headers);
+        $this->content = $content;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function statusCode(/* ... */): mixed
+    public function getStatus(): int { return $this->status; }
+    public function getContent(): string { return $this->content ?? ''; }
+
+    public function isSuccessful(): bool { return $this->status >= 200 && $this->status < 300; }
+    public function isClientError(): bool { return $this->status >= 400 && $this->status < 500; }
+    public function isServerError(): bool { return $this->status >= 500; }
+    public function isOk(): bool { return $this->status === 200; }
+    public function isNotFound(): bool { return $this->status === 404; }
+    public function isForbidden(): bool { return $this->status === 403; }
+    public function isUnauthorized(): bool { return $this->status === 401; }
+
+    public function setHeader(string $name, string $value): self
     {
-        // TODO: پیاده‌سازی statusCode مطابق مستندات (سند §3 API).
-        return null;
+        $this->headers->set($name, $value);
+        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function withStatus(/* ... */): mixed
+    public function getHeader(string $name, ?string $default = null): ?string
     {
-        // TODO: پیاده‌سازی withStatus مطابق مستندات (سند §3 API).
-        return null;
+        return $this->headers->get($name, $default);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function header(/* ... */): mixed
+    public function setContent(string $content): self
     {
-        // TODO: پیاده‌سازی header مطابق مستندات (سند §3 API).
-        return null;
+        $this->content = $content;
+        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function withHeader(/* ... */): mixed
+    public function setStatus(int $status): self
     {
-        // TODO: پیاده‌سازی withHeader مطابق مستندات (سند §3 API).
-        return null;
+        $this->status = $status;
+        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function withHeaders(/* ... */): mixed
+    public function send(): void
     {
-        // TODO: پیاده‌سازی withHeaders مطابق مستندات (سند §3 API).
-        return null;
+        if (!\headers_sent()) {
+            \http_response_code($this->status);
+            foreach ($this->headers->all() as $name => $value) {
+                $originalName = \str_replace(' ', '-', \ucwords(\str_replace('-', ' ', $name)));
+                \header("{$originalName}: {$value}");
+            }
+        }
+        echo $this->getContent();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function body(/* ... */): mixed
+    // === Static factories ===
+
+    public static function json(mixed $data, int $status = 200, array $headers = []): self
     {
-        // TODO: پیاده‌سازی body مطابق مستندات (سند §3 API).
-        return null;
+        $content = (string) \json_encode($data, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES);
+        return new self($status, $content, \array_merge(['Content-Type' => 'application/json; charset=utf-8'], $headers));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function withBody(/* ... */): mixed
+    public static function text(string $content, int $status = 200, array $headers = []): self
     {
-        // TODO: پیاده‌سازی withBody مطابق مستندات (سند §3 API).
-        return null;
+        return new self($status, $content, \array_merge(['Content-Type' => 'text/plain; charset=utf-8'], $headers));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function withJson(/* ... */): mixed
+    public static function html(string $content, int $status = 200, array $headers = []): self
     {
-        // TODO: پیاده‌سازی withJson مطابق مستندات (سند §3 API).
-        return null;
+        return new self($status, $content, \array_merge(['Content-Type' => 'text/html; charset=utf-8'], $headers));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function cookie(/* ... */): mixed
+    public static function redirect(string $url, int $status = 302, array $headers = []): self
     {
-        // TODO: پیاده‌سازی cookie مطابق مستندات (سند §3 API).
-        return null;
+        return new self($status, '', \array_merge(['Location' => $url], $headers));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function send(/* ... */): mixed
+    public static function notFound(string $message = 'Not Found', array $headers = []): self
     {
-        // TODO: پیاده‌سازی send مطابق مستندات (سند §3 API).
-        return null;
+        return new self(404, $message, $headers);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isSuccessful(/* ... */): mixed
+    public static function forbidden(string $message = 'Forbidden', array $headers = []): self
     {
-        // TODO: پیاده‌سازی isSuccessful مطابق مستندات (سند §3 API).
-        return null;
+        return new self(403, $message, $headers);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isRedirect(/* ... */): mixed
+    public static function unauthorized(string $message = 'Unauthorized', array $headers = []): self
     {
-        // TODO: پیاده‌سازی isRedirect مطابق مستندات (سند §3 API).
-        return null;
+        return new self(401, $message, $headers);
+    }
+
+    public static function badRequest(string $message = 'Bad Request', array $headers = []): self
+    {
+        return new self(400, $message, $headers);
+    }
+
+    public static function serverError(string $message = 'Internal Server Error', array $headers = []): self
+    {
+        return new self(500, $message, $headers);
+    }
+
+    public static function noContent(): self
+    {
+        return new self(204, '');
+    }
+
+    public function getStatusText(): string
+    {
+        return match ($this->status) {
+            200 => 'OK',
+            201 => 'Created',
+            204 => 'No Content',
+            301 => 'Moved Permanently',
+            302 => 'Found',
+            304 => 'Not Modified',
+            400 => 'Bad Request',
+            401 => 'Unauthorized',
+            403 => 'Forbidden',
+            404 => 'Not Found',
+            405 => 'Method Not Allowed',
+            409 => 'Conflict',
+            422 => 'Unprocessable Entity',
+            429 => 'Too Many Requests',
+            500 => 'Internal Server Error',
+            503 => 'Service Unavailable',
+            default => 'Unknown',
+        };
     }
 }

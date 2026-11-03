@@ -4,56 +4,112 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Http;
 
-use Tavaan\Core\Contracts\Config\RepositoryInterface as Config;
+/**
+ * HttpKernel — پردازش درخواست و تولید پاسخ.
+ *
+ * @see docs/03-engines/http.md
+ */
+final class HttpKernel
+{
+    /** @var list<callable(Request): void> */
+    private array $middleware = [];
+
+    /** @var callable(Request, Response): void|null */
+    private $terminateCallback = null;
+
+    private $dispatcher;
+
+    public function __construct(
+        ?callable $dispatcher = null,
+    ) {
+        $this->dispatcher = $dispatcher ?? fn(Request $r) => Response::text('Hello from Tavaan');
+    }
+
+    public function addMiddleware(callable $middleware): self
+    {
+        $this->middleware[] = $middleware;
+        return $this;
+    }
+
+    public function setDispatcher(callable $dispatcher): self
+    {
+        $this->dispatcher = $dispatcher;
+        return $this;
+    }
+
+    public function handle(Request $request): Response
+    {
+        // Run middleware (pre-processing)
+        foreach ($this->middleware as $mw) {
+            $result = $mw($request);
+            if ($result instanceof Response) {
+                return $result;
+            }
+        }
+        // Dispatch to router/controller
+        $dispatcher = $this->dispatcher;
+        $response = $dispatcher($request);
+        if ($response instanceof Response) return $response;
+        if (\is_string($response)) return Response::text($response);
+        if (\is_array($response)) return Response::json($response);
+        return Response::text('Invalid response from dispatcher');
+    }
+
+    public function terminate(Request $request, Response $response): void
+    {
+        if ($this->terminateCallback !== null) {
+            ($this->terminateCallback)($request, $response);
+        }
+    }
+
+    public function setTerminate(callable $callback): self
+    {
+        $this->terminateCallback = $callback;
+        return $this;
+    }
+
+    /**
+     * Process request and send response (for CLI/server).
+     */
+    public function run(?Request $request = null): void
+    {
+        $request ??= Request::capture();
+        $response = $this->handle($request);
+        $response->send();
+        $this->terminate($request, $response);
+    }
+}
 
 /**
- * HttpKernel — پیاده‌سازی اصلی موتور.
- *
- * @see \Tavaan\Engine\Http\Contracts\HttpKernelInterface
+ * HttpServiceProvider.
  */
-final class HttpKernel implements Contracts\HttpKernelInterface
+final class HttpServiceProvider
 {
+    private ?HttpKernel $kernel = null;
+
     /**
-     * @param Config $config پیکربندی موتور
+     * @param array<string, mixed> $config
      */
     public function __construct(
-        private readonly Config $config,
+        private readonly array $config = [],
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function handle(/* ... */): mixed
+    public function register(): void
     {
-        // TODO: پیاده‌سازی handle مطابق مستندات (سند §3 API).
-        return null;
+        $this->kernel = new HttpKernel();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function terminate(/* ... */): mixed
+    public function boot(): void {}
+
+    public function provides(): array
     {
-        // TODO: پیاده‌سازی terminate مطابق مستندات (سند §3 API).
-        return null;
+        return [HttpKernel::class, Request::class, Response::class];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function sendAndTerminate(/* ... */): mixed
+    public function getKernel(): HttpKernel
     {
-        // TODO: پیاده‌سازی sendAndTerminate مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function handleSubRequest(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی handleSubRequest مطابق مستندات (سند §3 API).
-        return null;
+        if ($this->kernel === null) $this->register();
+        return $this->kernel;
     }
 }
