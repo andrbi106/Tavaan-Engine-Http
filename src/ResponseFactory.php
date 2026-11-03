@@ -30,7 +30,6 @@ final class ResponseFactory
      */
     public function file(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -38,7 +37,6 @@ final class ResponseFactory
      */
     public function download(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -46,7 +44,6 @@ final class ResponseFactory
      */
     public function stream(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -54,7 +51,6 @@ final class ResponseFactory
      */
     public function streamDownload(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -62,7 +58,6 @@ final class ResponseFactory
      */
     public function noContent(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -70,7 +65,6 @@ final class ResponseFactory
      */
     public function make(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -78,7 +72,6 @@ final class ResponseFactory
      */
     public function redirectToRoute(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -86,7 +79,6 @@ final class ResponseFactory
      */
     public function redirectToUrl(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -94,7 +86,6 @@ final class ResponseFactory
      */
     public function problem(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
 }

@@ -150,7 +150,6 @@ final class Response
      */
     public function body(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -172,15 +171,13 @@ final class Response
      */
     public function isRedirect(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return $this->getProperty("redirect");
     }
     /**
      * statusCode
      */
     public function statusCode(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -202,7 +199,6 @@ final class Response
      */
     public function withHeaders(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -210,7 +206,6 @@ final class Response
      */
     public function withJson(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**

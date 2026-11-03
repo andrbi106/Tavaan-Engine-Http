@@ -326,7 +326,6 @@ final class Request
      */
     public function attribute(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -341,7 +340,6 @@ final class Request
      */
     public function file(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -349,7 +347,6 @@ final class Request
      */
     public function files(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -357,7 +354,6 @@ final class Request
      */
     public function fullUrl(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -365,7 +361,6 @@ final class Request
      */
     public function ip(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -380,7 +375,6 @@ final class Request
      */
     public function method(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -395,7 +389,6 @@ final class Request
      */
     public function path(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -410,7 +403,6 @@ final class Request
      */
     public function query(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -432,7 +424,6 @@ final class Request
      */
     public function withQuery(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -440,7 +431,6 @@ final class Request
      */
     public function withRoute(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
 }

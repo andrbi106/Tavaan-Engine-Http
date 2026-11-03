@@ -118,7 +118,6 @@ final class HttpServiceProvider
      */
     public function handleSubRequest(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -126,7 +125,6 @@ final class HttpServiceProvider
      */
     public function sendAndTerminate(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
 }
