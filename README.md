@@ -1,65 +1,113 @@
-# Http
+# Tavaan Engine — Http
 
-> Request/Response Immutable، Kernel + Middleware Pipeline، و Response Factory.
+> **HTTP** — موتور Http در فریمورک تَوان
+
+## مشخصات
 
 | فیلد | مقدار |
-|------|------|
-| Engine ID | `tavaan.engine.http` |
-| DOC-ID | `DOC-039` |
-| Namespace | `Tavaan\Engine\Http` |
-| اولویت | P0 (فاز M2) |
+|---|---|
+| شناسه | `tavaan.engine.http` |
+| نام | `Http` |
+| عنوان فارسی | HTTP |
+| نسخه | `0.1.0` |
+| namespace | `Tavaan\Engine\Http` |
+| نوع | `engine` |
 | Facade | `Http` (accessor: `http`) |
-| مخزن | https://github.com/andrbi106/Tavaan-Engine-Http |
-| مستندات | https://github.com/Derogaramin/Tavaan-Doc/blob/main/docs/03-engines/http.md
 
-## استفاده
+## قراردادها (Contracts)
 
-```php
-use Tavaan\Engine\Http\Request;
-use Tavaan\Engine\Http\Response;
-use Tavaan\Engine\Http\HttpKernel;
+این موتور قراردادهای زیر را ارائه می‌دهد:
 
-// Request
-$req = Request::create('/users?name=Ali', 'GET');
-$req->getMethod();      // 'GET'
-$req->getPath();        // '/users'
-$req->query->get('name'); // 'Ali'
-$req->input('name');    // 'Ali'
-$req->header('Accept');  // null
-$req->all();             // ['name' => 'Ali']
+- `Tavaan\Engine\Http\Contracts\CookieInterface`
+- `Tavaan\Engine\Http\Contracts\KernelInterface`
+- `Tavaan\Engine\Http\Contracts\MiddlewareInterface`
+- `Tavaan\Engine\Http\Contracts\RequestInterface`
+- `Tavaan\Engine\Http\Contracts\ResponseInterface`
+- `Tavaan\Engine\Http\Contracts\TerminableMiddleware`
+- `Tavaan\Engine\Http\Contracts\UploadedFileInterface`
+- `Tavaan\Engine\Http\Contracts\UriInterface`
 
-// POST با JSON
-$req = Request::create('/', 'POST', [], [], '{"user":{"id":42}}');
-$req->json('user.id');  // 42
+## خطاها (Exceptions)
 
-// از محیط واقعی
-$req = Request::capture();
+- `Tavaan\Engine\Http\Exceptions\BadRequestException`
+- `Tavaan\Engine\Http\Exceptions\CsrfTokenMismatchException`
+- `Tavaan\Engine\Http\Exceptions\ForbiddenException`
+- `Tavaan\Engine\Http\Exceptions\HeaderInjectionException`
+- `Tavaan\Engine\Http\Exceptions\HttpException`
+- `Tavaan\Engine\Http\Exceptions\MethodNotAllowedException`
+- `Tavaan\Engine\Http\Exceptions\PayloadTooLargeException`
+- `Tavaan\Engine\Http\Exceptions\RouteNotFoundException`
+- `Tavaan\Engine\Http\Exceptions\ServerErrorException`
+- `Tavaan\Engine\Http\Exceptions\TooManyRequestsException`
+- `Tavaan\Engine\Http\Exceptions\UnauthorizedException`
+- `Tavaan\Engine\Http\Exceptions\UnprocessableEntityException`
 
-// Response
-$res = Response::json(['status' => 'ok']);
-$res = Response::text('Hello');
-$res = Response::html('<h1>Hi</h1>');
-$res = Response::redirect('/new-path');
-$res = Response::notFound('Not Found');
-$res = Response::noContent();
-$res->setHeader('X-Custom', 'value');
-$res->send();
+## Facadeها
 
-// Kernel
-$kernel = new HttpKernel();
-$kernel->setDispatcher(fn(Request $r) => Response::text('Hello from ' . $r->getPath()));
-$kernel->addMiddleware(fn(Request $r) => null);  // pass-through
-$kernel->addMiddleware(fn(Request $r) => Response::text('blocked'));  // short-circuit
-$response = $kernel->handle($req);
-$kernel->terminate($req, $response);
+- `Tavaan\Engine\Http\Facades\Cookie`
+- `Tavaan\Engine\Http\Facades\Http`
+- `Tavaan\Engine\Http\Facades\Session`
 
-// اجرا و send خودکار
-$kernel->run();
+## کلاس‌های اصلی
+
+- `src/Console/RouteCacheCommand.php`
+- `src/Console/RouteClearCommand.php`
+- `src/Console/RouteListCommand.php`
+- `src/Console/RouteMatchCommand.php`
+- `src/Console/ServeCommand.php`
+- `src/Cookie/Cookie.php`
+- `src/Cookie/CookieJar.php`
+- `src/Cookie/EncryptCookiesMiddleware.php`
+- `src/Cors/CorsMiddleware.php`
+- `src/HttpKernel.php`
+- `src/Middleware/IpMatcher.php`
+- `src/Middleware/MaintenanceModeMiddleware.php`
+- `src/Middleware/RequestSizeLimitMiddleware.php`
+- `src/Middleware/SecurityHeadersMiddleware.php`
+- `src/Middleware/SetLocaleMiddleware.php`
+- `src/Middleware/TraceContextMiddleware.php`
+- `src/Middleware/TrustProxiesMiddleware.php`
+- `src/Redirector.php`
+- `src/Request.php`
+- `src/Response.php`
+- ... و 21 فایل دیگر
+
+## Service Providerها
+
+- `Tavaan\Engine\Http\HttpServiceProvider`
+
+## وابستگی‌ها
+
+**موتورهای مورد‌نیاز:**
+
+- `pipeline`
+- `event`
+- `error`
+- `config`
+
+## پیکربندی
+
+- فایل پیکربندی: `config/http.php`
+- کلید: `http`
+
+## نصب
+
+```bash
+git clone https://github.com/andrbi106/Tavaan-Engine-Http.git
 ```
 
-## مستندات
+این موتور بخشی از فریمورک تَوان است و معمولاً به‌صورت مستقیم نصب نمی‌شود،
+بلکه توسط [Tavaan-Core](https://github.com/andrbi106/Tavaan-Core) مدیریت می‌شود.
 
-[docs/03-engines/http.md](https://github.com/Derogaramin/Tavaan-Doc/blob/main/docs/03-engines/http.md)
+## روابط با سایر مخازن
 
----
-*Generated on 2026-11-03.*
+| مخزن | نقش |
+|---|---|
+| **`andrbi106/Tavaan-Engine-Http`** (این مخزن) | موتور Http |
+| `andrbi106/Tavaan-Engine-Core` | ساختار پایه + درگاه ارتباط موتورها |
+| `andrbi106/Tavaan-Core` | اسکلت اپلیکیشن + همهٔ موتورها |
+| `Derogaramin/Tavaan-Framework` | فریمورک مادر (monorepo) |
+
+## مجوز
+
+MIT — هم‌راستا با فریمورک مادر تَوان.

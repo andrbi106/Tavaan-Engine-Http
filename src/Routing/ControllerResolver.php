@@ -106,7 +106,7 @@ final class ControllerResolver
             if ($type instanceof \ReflectionNamedType && !$type->isBuiltin()) {
                 $typeName = $type->getName();
 
-                if ($typeName === Request::class || $typeName === \Tavaan\Core\Contracts\Http\RequestInterface::class) {
+                if ($typeName === Request::class || $typeName === \Tavaan\Engine\Http\Contracts\RequestInterface::class) {
                     $args[] = $request;
                     continue;
                 }
@@ -140,7 +140,7 @@ final class ControllerResolver
                         $args[] = null;
                         continue;
                     }
-                    throw new \Tavaan\Core\Exceptions\Http\RouteNotFoundException(
+                    throw new \Tavaan\Engine\Http\Exceptions\RouteNotFoundException(
                         messageId: 'http.route.not_found',
                         context: ['parameter' => $name],
                     );
@@ -247,7 +247,7 @@ final class ControllerResolver
             return $result;
         }
 
-        if ($result instanceof \Tavaan\Core\Contracts\Http\ResponseInterface) {
+        if ($result instanceof \Tavaan\Engine\Http\Contracts\ResponseInterface) {
             return new Response($result->body(), $result->statusCode());
         }
 

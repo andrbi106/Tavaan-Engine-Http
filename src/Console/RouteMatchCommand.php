@@ -26,11 +26,11 @@ final class RouteMatchCommand extends Command
 
         try {
             $match = $router->matchUri((string) $this->argument('method', 'GET'), (string) $this->argument('path', '/'));
-        } catch (\Tavaan\Core\Exceptions\Http\RouteNotFoundException $e) {
+        } catch (\Tavaan\Engine\Http\Exceptions\RouteNotFoundException $e) {
             $this->error('  404 — روتی مطابقت نکرد.');
 
             return self::FAILURE;
-        } catch (\Tavaan\Core\Exceptions\Http\MethodNotAllowedException $e) {
+        } catch (\Tavaan\Engine\Http\Exceptions\MethodNotAllowedException $e) {
             $this->error('  405 — متد مجاز نیست. Allow: ' . \implode(', ', (array) ($e->headers['Allow'] ?? [])));
 
             return self::FAILURE;

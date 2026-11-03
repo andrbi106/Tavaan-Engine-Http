@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Http\Cookie;
 
-use Tavaan\Core\Contracts\Http\CookieInterface;
+use Tavaan\Engine\Http\Contracts\CookieInterface;
 
 /**
  * تَوان | Tavaan — Cookie

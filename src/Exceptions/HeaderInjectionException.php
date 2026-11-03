@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Http\Exceptions;
 
-use Tavaan\Core\Exceptions\Http\HttpException;
+use Tavaan\Engine\Http\Exceptions\HttpException;
 
 /**
  * تلاش برای تزریق CRLF/کاراکتر غیرمجاز در header (حوزهٔ کد: HT).

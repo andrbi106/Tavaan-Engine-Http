@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Http;
 
-use Tavaan\Core\Contracts\Http\UploadedFileInterface;
-use Tavaan\Core\Exceptions\Filesystem\PathTraversalException;
+use Tavaan\Engine\Http\Contracts\UploadedFileInterface;
+use Tavaan\Engine\Filesystem\Exceptions\PathTraversalException;
 use Tavaan\Engine\Compat\MagicBytesDetector;
 
 /**

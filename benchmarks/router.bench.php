@@ -67,7 +67,7 @@ $bench('match wildcard (multi-segment)', static fn () => $router->matchUri('GET'
 $bench('miss → RouteNotFound (exception cost)', static function () use ($router): void {
     try {
         $router->matchUri('GET', '/no/such/route/here');
-    } catch (\Tavaan\Core\Exceptions\Http\RouteNotFoundException) {
+    } catch (\Tavaan\Engine\Http\Exceptions\RouteNotFoundException) {
     }
 }, 20.0, 5000);
 

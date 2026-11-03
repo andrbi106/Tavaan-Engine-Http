@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Http\Routing;
 
-use Tavaan\Core\Exceptions\Http\MethodNotAllowedException;
-use Tavaan\Core\Exceptions\Http\RouteNotFoundException;
+use Tavaan\Engine\Http\Exceptions\MethodNotAllowedException;
+use Tavaan\Engine\Http\Exceptions\RouteNotFoundException;
 
 /**
  * تَوان | Tavaan — Routing

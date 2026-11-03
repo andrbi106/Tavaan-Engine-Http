@@ -263,10 +263,10 @@ final class Router
         $events = $this->events;
         try {
             $match = $this->matcher->match($request->method(), $request->path(), $request->host());
-        } catch (\Tavaan\Core\Exceptions\Http\RouteNotFoundException $e) {
+        } catch (\Tavaan\Engine\Http\Exceptions\RouteNotFoundException $e) {
             $events?->dispatch('router.not_found', ['path' => $request->path()]);
             throw $e;
-        } catch (\Tavaan\Core\Exceptions\Http\MethodNotAllowedException $e) {
+        } catch (\Tavaan\Engine\Http\Exceptions\MethodNotAllowedException $e) {
             $events?->dispatch('router.method_not_allowed', ['path' => $request->path()]);
             throw $e;
         }

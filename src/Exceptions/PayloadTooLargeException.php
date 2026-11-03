@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Http\Exceptions;
 
-use Tavaan\Core\Exceptions\Http\HttpException;
+use Tavaan\Engine\Http\Exceptions\HttpException;
 
 /**
  * بدنهٔ درخواست بیش از حد مجاز (413).
