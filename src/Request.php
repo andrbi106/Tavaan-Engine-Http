@@ -320,4 +320,133 @@ final class Request
         $accept = $this->headers->get('Accept', '');
         return $accept !== null && \str_contains($accept, 'application/json');
     }
+
+    /**
+     * attribute
+     */
+    public function attribute(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * except
+     */
+    public function except(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * file
+     */
+    public function file(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * files
+     */
+    public function files(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * fullUrl
+     */
+    public function fullUrl(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * ip
+     */
+    public function ip(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * isSecure
+     */
+    public function isSecure(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * method
+     */
+    public function method(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * only
+     */
+    public function only(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * path
+     */
+    public function path(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * post
+     */
+    public function post(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * query
+     */
+    public function query(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * withAttribute
+     */
+    public function withAttribute(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * withMethod
+     */
+    public function withMethod(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * withQuery
+     */
+    public function withQuery(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * withRoute
+     */
+    public function withRoute(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
 }

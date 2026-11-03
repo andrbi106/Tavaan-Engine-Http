@@ -112,4 +112,21 @@ final class HttpServiceProvider
         if ($this->kernel === null) $this->register();
         return $this->kernel;
     }
+
+    /**
+     * handleSubRequest
+     */
+    public function handleSubRequest(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * sendAndTerminate
+     */
+    public function sendAndTerminate(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
 }

@@ -144,4 +144,85 @@ final class Response
             default => 'Unknown',
         };
     }
+
+    /**
+     * body
+     */
+    public function body(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * cookie
+     */
+    public function cookie(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * header
+     */
+    public function header(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * isRedirect
+     */
+    public function isRedirect(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * statusCode
+     */
+    public function statusCode(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * withBody
+     */
+    public function withBody(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * withHeader
+     */
+    public function withHeader(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * withHeaders
+     */
+    public function withHeaders(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * withJson
+     */
+    public function withJson(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * withStatus
+     */
+    public function withStatus(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
 }
