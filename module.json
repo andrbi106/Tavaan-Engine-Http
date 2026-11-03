@@ -11,7 +11,7 @@
     }
   },
   "providers": [
-    "Tavaan\\Engine\\Http\\HttpServiceProvider"
+    "Tavaan\\Engine\\Http\\HttpKernelServiceProvider"
   ],
   "requires": {
     "php": ">=8.2",
