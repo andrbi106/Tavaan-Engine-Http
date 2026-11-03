@@ -9,7 +9,7 @@ use Tavaan\Core\Contracts\Console\CommandInterface;
 /**
  * route:match command.
  */
-final class Route_matchCommand implements CommandInterface
+final class RouteMatchCommand implements CommandInterface
 {
     public function name(): string
     {

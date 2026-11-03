@@ -7,18 +7,18 @@ namespace Tavaan\Engine\Http\Console;
 use Tavaan\Core\Contracts\Console\CommandInterface;
 
 /**
- * route:list command.
+ * route:cache command.
  */
-final class Route_listCommand implements CommandInterface
+final class RouteCacheCommand implements CommandInterface
 {
     public function name(): string
     {
-        return 'route:list';
+        return 'route:cache';
     }
 
     public function description(): string
     {
-        return 'Run route:list (TODO: fill description).';
+        return 'Run route:cache (TODO: fill description).';
     }
 
     public function handle(array $args = []): int

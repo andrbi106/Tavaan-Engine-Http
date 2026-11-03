@@ -7,18 +7,18 @@ namespace Tavaan\Engine\Http\Console;
 use Tavaan\Core\Contracts\Console\CommandInterface;
 
 /**
- * route:cache command.
+ * middleware:list command.
  */
-final class Route_cacheCommand implements CommandInterface
+final class MiddlewareListCommand implements CommandInterface
 {
     public function name(): string
     {
-        return 'route:cache';
+        return 'middleware:list';
     }
 
     public function description(): string
     {
-        return 'Run route:cache (TODO: fill description).';
+        return 'Run middleware:list (TODO: fill description).';
     }
 
     public function handle(array $args = []): int
