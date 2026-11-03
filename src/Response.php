@@ -190,16 +190,14 @@ final class Response
      */
     public function withBody(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        \$new = clone \$this; \$new->content = \$body; return \$new;
     }
     /**
      * withHeader
      */
     public function withHeader(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        \$new = clone \$this; \$new->headers->set(\$name, \$value); return \$new;
     }
     /**
      * withHeaders
@@ -222,7 +220,6 @@ final class Response
      */
     public function withStatus(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        \$new = clone \$this; \$new->status = \$code; return \$new;
     }
 }

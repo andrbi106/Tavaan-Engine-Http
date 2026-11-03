@@ -24,8 +24,7 @@ final class ResponseFactory
      */
     public function view(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
-        return null;
+        return \$this->addRoute('GET', \$uri, function() use (\$view, \$data) { return \$view; });
     }
     /**
      * file

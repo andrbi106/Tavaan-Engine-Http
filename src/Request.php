@@ -334,8 +334,7 @@ final class Request
      */
     public function except(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return array_diff_key(\$this->getAttributes(), array_flip(\$keys));
     }
     /**
      * file
@@ -374,8 +373,7 @@ final class Request
      */
     public function isSecure(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return \$this->uri->getScheme() === 'https';
     }
     /**
      * method
@@ -390,8 +388,7 @@ final class Request
      */
     public function only(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return array_intersect_key(\$this->getAttributes(), array_flip(\$keys));
     }
     /**
      * path
@@ -422,16 +419,14 @@ final class Request
      */
     public function withAttribute(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        \$new = clone \$this; \$new->attributes->set(\$name, \$value); return \$new;
     }
     /**
      * withMethod
      */
     public function withMethod(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        \$new = clone \$this; \$new->method = \$method; return \$new;
     }
     /**
      * withQuery
