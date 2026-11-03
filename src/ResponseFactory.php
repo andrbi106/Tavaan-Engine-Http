@@ -16,8 +16,7 @@ final class ResponseFactory
      */
     public function json(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
-        return null;
+        $d = json_decode($this->getContent(), true); return $key === null ? $d : ($d[$key] ?? $default);
     }
     /**
      * view

@@ -403,8 +403,7 @@ final class Request
      */
     public function post(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return $this->call("POST", $uri, $data);
     }
     /**
      * query

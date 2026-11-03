@@ -158,16 +158,14 @@ final class Response
      */
     public function cookie(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return $this->cookies->get($key, $default);
     }
     /**
      * header
      */
     public function header(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return $this->headers->get($name, $default);
     }
     /**
      * isRedirect
