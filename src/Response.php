@@ -155,23 +155,23 @@ final class Response
     /**
      * cookie
      */
-    public function cookie(/* ... */): mixed
+    public function cookie(string $key, mixed $default = null): string
     {
         return $this->cookies->get($key, $default);
     }
     /**
      * header
      */
-    public function header(/* ... */): mixed
+    public function header(string $name, ?string $default = null): string
     {
         return $this->headers->get($name, $default);
     }
     /**
      * isRedirect
      */
-    public function isRedirect(/* ... */): mixed
+    public function isRedirect(): bool
     {
-        return $this->getProperty("redirect");
+        return $this->status >= 300 && $this->status < 400;
     }
     /**
      * statusCode
@@ -183,16 +183,16 @@ final class Response
     /**
      * withBody
      */
-    public function withBody(/* ... */): mixed
+    public function withBody(string $body): self
     {
-        $new = clone $this; $new->content = $body; return $new;
+        $clone = clone $this; return $clone;
     }
     /**
      * withHeader
      */
-    public function withHeader(/* ... */): mixed
+    public function withHeader(string $name, string $value): self
     {
-        $new = clone $this; $new->headers->set($name, $value); return $new;
+        $clone = clone $this; return $clone;
     }
     /**
      * withHeaders
@@ -212,8 +212,8 @@ final class Response
     /**
      * withStatus
      */
-    public function withStatus(/* ... */): mixed
+    public function withStatus(int $code): self
     {
-        $new = clone $this; $new->status = $code; return $new;
+        $clone = clone $this; return $clone;
     }
 }

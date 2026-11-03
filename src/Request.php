@@ -331,7 +331,7 @@ final class Request
     /**
      * except
      */
-    public function except(/* ... */): mixed
+    public function except(array $keys)
     {
         return array_diff_key($this->getAttributes(), array_flip($keys));
     }
@@ -366,9 +366,9 @@ final class Request
     /**
      * isSecure
      */
-    public function isSecure(/* ... */): mixed
+    public function isSecure(): bool
     {
-        return $this->uri->getScheme() === 'https';
+        return $this->uri->getScheme() === "https";
     }
     /**
      * method
@@ -380,7 +380,7 @@ final class Request
     /**
      * only
      */
-    public function only(/* ... */): mixed
+    public function only(array $keys)
     {
         return array_intersect_key($this->getAttributes(), array_flip($keys));
     }
@@ -394,9 +394,9 @@ final class Request
     /**
      * post
      */
-    public function post(/* ... */): mixed
+    public function post(?string $key = null, mixed $default = null): string
     {
-        return $this->call("POST", $uri, $data);
+        return $key === null ? $this->request->all() : $this->request->get($key, $default);
     }
     /**
      * query
@@ -408,16 +408,16 @@ final class Request
     /**
      * withAttribute
      */
-    public function withAttribute(/* ... */): mixed
+    public function withAttribute(string $name, mixed $value): self
     {
-        $new = clone $this; $new->attributes->set($name, $value); return $new;
+        $clone = clone $this; return $clone;
     }
     /**
      * withMethod
      */
-    public function withMethod(/* ... */): mixed
+    public function withMethod(string $method): self
     {
-        $new = clone $this; $new->method = $method; return $new;
+        $clone = clone $this; return $clone;
     }
     /**
      * withQuery
