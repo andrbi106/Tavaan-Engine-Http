@@ -116,15 +116,15 @@ final class HttpServiceProvider
     /**
      * handleSubRequest
      */
-    public function handleSubRequest(/* ... */): mixed
+    public function handleSubRequest(Request $request): Response
     {
-        return null;
+        return $this->handle($request);
     }
     /**
      * sendAndTerminate
      */
-    public function sendAndTerminate(/* ... */): mixed
+    public function sendAndTerminate(Request $request): void
     {
-        return null;
+        $response = $this->handle($request); $response->send(); $this->terminate($request, $response);
     }
 }

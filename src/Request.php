@@ -324,9 +324,9 @@ final class Request
     /**
      * attribute
      */
-    public function attribute(/* ... */): mixed
+    public function attribute(string $key, mixed $default = null): mixed
     {
-        return null;
+        return $this->attributes->get($key, $default);
     }
     /**
      * except
@@ -338,30 +338,30 @@ final class Request
     /**
      * file
      */
-    public function file(/* ... */): mixed
+    public function file(string $key): mixed
     {
-        return null;
+        return $this->files[$key] ?? null;
     }
     /**
      * files
      */
-    public function files(/* ... */): mixed
+    public function files(): array
     {
-        return null;
+        return $this->files ?? [];
     }
     /**
      * fullUrl
      */
-    public function fullUrl(/* ... */): mixed
+    public function fullUrl(): string
     {
-        return null;
+        return (string) $this->uri;
     }
     /**
      * ip
      */
-    public function ip(/* ... */): mixed
+    public function ip(): string
     {
-        return null;
+        return $this->headers->get("X-Forwarded-For") ?? $this->headers->get("Client-IP") ?? "127.0.0.1";
     }
     /**
      * isSecure
@@ -373,9 +373,9 @@ final class Request
     /**
      * method
      */
-    public function method(/* ... */): mixed
+    public function method(): string
     {
-        return null;
+        return $this->method;
     }
     /**
      * only
@@ -387,9 +387,9 @@ final class Request
     /**
      * path
      */
-    public function path(/* ... */): mixed
+    public function path(): string
     {
-        return null;
+        return $this->uri->getPath();
     }
     /**
      * post
@@ -401,9 +401,9 @@ final class Request
     /**
      * query
      */
-    public function query(/* ... */): mixed
+    public function query(?string $key = null, mixed $default = null): mixed
     {
-        return null;
+        return $key === null ? $this->query->all() : $this->query->get($key, $default);
     }
     /**
      * withAttribute
@@ -422,15 +422,15 @@ final class Request
     /**
      * withQuery
      */
-    public function withQuery(/* ... */): mixed
+    public function withQuery(array $query): self
     {
-        return null;
+        $clone = clone $this; $clone->query = new ParameterBag($query); return $clone;
     }
     /**
      * withRoute
      */
-    public function withRoute(/* ... */): mixed
+    public function withRoute(mixed $route): self
     {
-        return null;
+        $this->attributes->set("_route", $route); return $this;
     }
 }

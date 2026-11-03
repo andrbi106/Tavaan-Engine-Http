@@ -4,88 +4,83 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Http;
 
-/**
- * ResponseFactory — پیاده‌سازی مطابق مستندات.
- *
- * @see docs/03-engines/ (YAML machine-readable block)
- */
 final class ResponseFactory
 {
-    /**
-     * json
-     */
-    public function json(/* ... */): mixed
+    public function json(mixed $data = null, int $status = 200, array $headers = []): Response
     {
-        $d = json_decode($this->getContent(), true); return $key === null ? $d : ($d[$key] ?? $default);
+        $content = json_encode($data ?? [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        return new Response($status, $content ?: '{}', array_merge(['Content-Type' => 'application/json; charset=utf-8'], $headers));
     }
-    /**
-     * view
-     */
-    public function view(/* ... */): mixed
+
+    public function view(string $view, array $data = [], int $status = 200, array $headers = []): Response
     {
-        return $this->addRoute('GET', $uri, function() use ($view, $data) { return $view; });
+        return new Response($status, '<!-- View: ' . $view . ' -->', array_merge(['Content-Type' => 'text/html; charset=utf-8'], $headers));
     }
-    /**
-     * file
-     */
-    public function file(/* ... */): mixed
+
+    public function file(string $path, array $headers = []): Response
     {
-        return null;
+        if (!file_exists($path)) return new Response(404, 'File not found');
+        $content = file_get_contents($path) ?: '';
+        $mime = function_exists('mime_content_type') ? mime_content_type($path) : 'application/octet-stream';
+        return new Response(200, $content, array_merge(['Content-Type' => $mime, 'Content-Disposition' => 'inline'], $headers));
     }
-    /**
-     * download
-     */
-    public function download(/* ... */): mixed
+
+    public function download(string $path, ?string $name = null, array $headers = []): Response
     {
-        return null;
+        if (!file_exists($path)) return new Response(404, 'File not found');
+        $content = file_get_contents($path) ?: '';
+        $filename = $name ?? basename($path);
+        return new Response(200, $content, array_merge([
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ], $headers));
     }
-    /**
-     * stream
-     */
-    public function stream(/* ... */): mixed
+
+    public function stream($resource, int $status = 200, array $headers = []): Response
     {
-        return null;
+        $content = '';
+        if (is_resource($resource)) {
+            while (!feof($resource)) { $content .= fread($resource, 8192); }
+        }
+        return new Response($status, $content, $headers);
     }
-    /**
-     * streamDownload
-     */
-    public function streamDownload(/* ... */): mixed
+
+    public function streamDownload($resource, ?string $name = null, array $headers = []): Response
     {
-        return null;
+        $content = '';
+        if (is_resource($resource)) {
+            while (!feof($resource)) { $content .= fread($resource, 8192); }
+        }
+        $filename = $name ?? 'download';
+        return new Response(200, $content, array_merge([
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ], $headers));
     }
-    /**
-     * noContent
-     */
-    public function noContent(/* ... */): mixed
+
+    public function noContent(int $status = 204, array $headers = []): Response
     {
-        return null;
+        return new Response($status, '', $headers);
     }
-    /**
-     * make
-     */
-    public function make(/* ... */): mixed
+
+    public function make(int $status, string $content = '', array $headers = []): Response
     {
-        return null;
+        return new Response($status, $content, $headers);
     }
-    /**
-     * redirectToRoute
-     */
-    public function redirectToRoute(/* ... */): mixed
+
+    public function redirectToRoute(string $route, array $params = [], int $status = 302, array $headers = []): Response
     {
-        return null;
+        return new Response($status, '', array_merge(['Location' => $route], $headers));
     }
-    /**
-     * redirectToUrl
-     */
-    public function redirectToUrl(/* ... */): mixed
+
+    public function redirectToUrl(string $url, int $status = 302, array $headers = []): Response
     {
-        return null;
+        return new Response($status, '', array_merge(['Location' => $url], $headers));
     }
-    /**
-     * problem
-     */
-    public function problem(/* ... */): mixed
+
+    public function problem(string $title, int $status = 400, string $detail = '', string $type = 'about:blank'): Response
     {
-        return null;
+        $body = json_encode(['type' => $type, 'title' => $title, 'status' => $status, 'detail' => $detail], JSON_UNESCAPED_UNICODE);
+        return new Response($status, $body ?: '{}', ['Content-Type' => 'application/problem+json; charset=utf-8']);
     }
 }

@@ -148,9 +148,9 @@ final class Response
     /**
      * body
      */
-    public function body(/* ... */): mixed
+    public function body(): string
     {
-        return null;
+        return $this->content ?? "";
     }
     /**
      * cookie
@@ -176,9 +176,9 @@ final class Response
     /**
      * statusCode
      */
-    public function statusCode(/* ... */): mixed
+    public function statusCode(): int
     {
-        return null;
+        return $this->status;
     }
     /**
      * withBody
@@ -197,16 +197,17 @@ final class Response
     /**
      * withHeaders
      */
-    public function withHeaders(/* ... */): mixed
+    public function withHeaders(array $headers): self
     {
-        return null;
+        $clone = clone $this; foreach ($headers as $k => $v) { $clone->headers->set($k, $v); } return $clone;
     }
     /**
      * withJson
      */
-    public function withJson(/* ... */): mixed
+    public function withJson(mixed $data, int $status = 200): self
     {
-        return null;
+        $content = json_encode($data, JSON_UNESCAPED_UNICODE);
+        return new self($status, $content ?: "{}", ["Content-Type" => "application/json"]);
     }
     /**
      * withStatus
