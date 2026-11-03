@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Http\Tests\Feature;
 
-use PHPUnit\Framework\TestCase;
+use Tavaan\Testing\TestCase;
 use Tavaan\Engine\Http\Request;
 use Tavaan\Engine\Http\Response;
 use Tavaan\Engine\Http\HttpKernel;
