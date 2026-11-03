@@ -334,7 +334,7 @@ final class Request
      */
     public function except(/* ... */): mixed
     {
-        return array_diff_key(\$this->getAttributes(), array_flip(\$keys));
+        return array_diff_key($this->getAttributes(), array_flip($keys));
     }
     /**
      * file
@@ -373,7 +373,7 @@ final class Request
      */
     public function isSecure(/* ... */): mixed
     {
-        return \$this->uri->getScheme() === 'https';
+        return $this->uri->getScheme() === 'https';
     }
     /**
      * method
@@ -388,7 +388,7 @@ final class Request
      */
     public function only(/* ... */): mixed
     {
-        return array_intersect_key(\$this->getAttributes(), array_flip(\$keys));
+        return array_intersect_key($this->getAttributes(), array_flip($keys));
     }
     /**
      * path
@@ -419,14 +419,14 @@ final class Request
      */
     public function withAttribute(/* ... */): mixed
     {
-        \$new = clone \$this; \$new->attributes->set(\$name, \$value); return \$new;
+        $new = clone $this; $new->attributes->set($name, $value); return $new;
     }
     /**
      * withMethod
      */
     public function withMethod(/* ... */): mixed
     {
-        \$new = clone \$this; \$new->method = \$method; return \$new;
+        $new = clone $this; $new->method = $method; return $new;
     }
     /**
      * withQuery

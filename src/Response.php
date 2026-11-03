@@ -190,14 +190,14 @@ final class Response
      */
     public function withBody(/* ... */): mixed
     {
-        \$new = clone \$this; \$new->content = \$body; return \$new;
+        $new = clone $this; $new->content = $body; return $new;
     }
     /**
      * withHeader
      */
     public function withHeader(/* ... */): mixed
     {
-        \$new = clone \$this; \$new->headers->set(\$name, \$value); return \$new;
+        $new = clone $this; $new->headers->set($name, $value); return $new;
     }
     /**
      * withHeaders
@@ -220,6 +220,6 @@ final class Response
      */
     public function withStatus(/* ... */): mixed
     {
-        \$new = clone \$this; \$new->status = \$code; return \$new;
+        $new = clone $this; $new->status = $code; return $new;
     }
 }
