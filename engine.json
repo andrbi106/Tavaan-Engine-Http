@@ -10,11 +10,28 @@
       "Tavaan\\Engine\\Http\\": "src/"
     }
   },
-  "providers": ["Tavaan\\Engine\\Http\\HttpServiceProvider"],
-  "requires": {"php": ">=8.2", "engines": ["pipeline", "event", "error", "config"]},
-  "config": {"file": "config/http.php", "key": "http"},
+  "providers": [
+    "Tavaan\\Engine\\Http\\HttpServiceProvider"
+  ],
+  "requires": {
+    "php": ">=8.2",
+    "engines": [
+      "pipeline",
+      "event",
+      "error",
+      "config"
+    ]
+  },
+  "config": {
+    "file": "config/http.php",
+    "key": "http"
+  },
   "tables": [],
   "commands": [],
-  "facade": {"name": "Http", "accessor": "http"},
-  "docs": "docs/03-engines/http.md"
+  "facade": {
+    "name": "Http",
+    "accessor": "http"
+  },
+  "docs": "docs/03-engines/http.md",
+  "class": "Tavaan\\Engine\\Http\\HttpEngine"
 }
